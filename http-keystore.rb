@@ -3,7 +3,7 @@
 require 'sinatra'
 require 'sinatra-websocket'
 
-IO.write("/var/local/http-keystore.pid", Process.pid)
+IO.write("/var/local/http-keystore/http-keystore.pid", Process.pid)
 
 set :server, 'thin'
 set :sockets, []
