@@ -10,7 +10,7 @@ set :sockets, []
 set :port, 11000
 set :bind, "0.0.0.0"
 
-@sockets_by_key = {}
+$sockets_by_key = {}
 
 def keys_dir
   "keys"
@@ -21,12 +21,12 @@ def path_for_key(key)
 end
 
 def register_socket(key, ws)
-  @sockets_by_key[key] ||= []
-  @sockets_by_key[key] << ws
+  $sockets_by_key[key] ||= []
+  $sockets_by_key[key] << ws
 end
 
 def unregister_socket(key, ws)
-  @sockets_by_key[key].delete(ws)
+  $sockets_by_key[key].delete(ws)
 end
 
 def send_key_to_socket(key, ws)
@@ -39,7 +39,7 @@ def send_key_to_socket(key, ws)
 end
 
 def send_key(key)
-  (@sockets_by_key[key] || []).each { |ws| send_key_to_socket(key, ws) }
+  ($sockets_by_key[key] || []).each { |ws| send_key_to_socket(key, ws) }
 end
 
 get '/:key' do |key|
